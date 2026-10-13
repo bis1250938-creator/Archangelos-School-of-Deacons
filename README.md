@@ -2,7 +2,7 @@
 
 Arabic-first learning library and administrator upload dashboard for Coptic Orthodox lessons. This is a new, standalone app: plain HTML, CSS, and JavaScript in Firebase Hosting, Firebase Authentication and Firestore for identity and lesson metadata, and a separately deployed Cloudflare Worker for private R2 storage, media delivery, and multipart upload control.
 
-The school seal supplied with the request is in `assets/school-seal.jpeg`. Firebase Auth and Firestore use the modular Firebase JavaScript SDK, pinned to the 13.0.0 CDN release.
+The school seal supplied with the request is in `assets/school-seal.png`. Firebase Auth and Firestore use the modular Firebase JavaScript SDK, pinned to the 13.0.0 CDN release.
 
 ## What is included
 
@@ -16,6 +16,14 @@ The school seal supplied with the request is in `assets/school-seal.jpeg`. Fireb
 
 No R2 credential, Firebase service account, private token, or media binary is included in browser configuration. The Firebase web configuration in `app-config.js` is public client configuration; R2 keys stay in Cloudflare Worker secrets.
 
+## Application logo
+
+The original transparent PNG at `assets/school-seal.png` is the official application logo and is not edited. The same
+source image appears in the public header and hero, the administrator header, and the administrator sign-in screen.
+`assets/favicon-16.png` and `assets/favicon-32.png` provide browser favicons, `assets/apple-touch-icon.png` is the
+Apple touch icon, and the PWA manifest points to 192 px and 512 px icons plus a maskable 512 px icon. The smaller
+variants add transparent or white padding to keep the complete circular seal visible. This project is a web app hosted
+on Firebase Hosting; it has no desktop executable or installer icon configuration.
 ## App workflow
 
 1. A student filters published lessons by stage, subject, and term. The app fetches lesson metadata first and only requests a media URL when a lesson is opened. Videos use `preload="metadata"` and the Worker streams byte ranges so playback and seeking do not require buffering the whole file.

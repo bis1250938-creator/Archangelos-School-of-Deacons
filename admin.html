@@ -4,22 +4,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#801329">
-  <title>إدارة المحتوى | مدرسة أرشى أنجيلوس</title>
-  <link rel="icon" href="./assets/school-seal.jpeg" type="image/jpeg">
+  <meta name="application-name" content="Archangelos School of Deacons">
+  <title>Content Admin | Archangelos School of Deacons</title>
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-touch-icon.png">
+  <link rel="manifest" href="./manifest.webmanifest">
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body class="admin-page">
   <header class="site-header">
     <a class="brand" href="./">
-      <img src="./assets/school-seal.jpeg" alt="شعار المدرسة">
-      <span><strong>إدارة المحتوى</strong><small>مدرسة أرشى أنجيلوس للشمامسة</small></span>
+      <img src="./assets/school-seal.png" alt="شعار المدرسة">
+      <span><strong>إدارة المحتوى</strong><small>Archangelos School of Deacons</small></span>
     </a>
     <div class="header-actions"><a class="button button-quiet" href="./">عرض المكتبة</a><button id="signOutButton" class="button button-outline hidden">تسجيل الخروج</button></div>
   </header>
 
   <main class="admin-main">
     <section id="loginPanel" class="panel login-panel">
-      <div class="panel-title"><p class="eyebrow">بوابة آمنة</p><h1>دخول المسؤولين</h1><p class="muted">استخدم حساب Firebase الذي منحه مدير النظام صلاحية المسؤول.</p></div>
+      <div class="panel-title"><img class="login-brand-logo" src="./assets/school-seal.png" alt="" aria-hidden="true"><p class="eyebrow">بوابة آمنة</p><h1>دخول المسؤولين</h1><p class="muted">استخدم حساب Firebase الذي منحه مدير النظام صلاحية المسؤول.</p></div>
       <form id="loginForm" class="stack-form">
         <label>البريد الإلكتروني<input id="emailInput" type="email" autocomplete="username" required></label>
         <label>كلمة المرور<input id="passwordInput" type="password" autocomplete="current-password" required></label>
