@@ -1,0 +1,9 @@
+.firebase/
+.env
+.env.*
+!.env.example
+node_modules/
+r2-worker/.wrangler/
+r2-worker/.dev.vars
+tools/service-account*.json
+*.log

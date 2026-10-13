@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#801329">
+  <title>إدارة المحتوى | مدرسة أرشى أنجيلوس</title>
+  <link rel="icon" href="./assets/school-seal.jpeg" type="image/jpeg">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body class="admin-page">
+  <header class="site-header">
+    <a class="brand" href="./">
+      <img src="./assets/school-seal.jpeg" alt="شعار المدرسة">
+      <span><strong>إدارة المحتوى</strong><small>مدرسة أرشى أنجيلوس للشمامسة</small></span>
+    </a>
+    <div class="header-actions"><a class="button button-quiet" href="./">عرض المكتبة</a><button id="signOutButton" class="button button-outline hidden">تسجيل الخروج</button></div>
+  </header>
+
+  <main class="admin-main">
+    <section id="loginPanel" class="panel login-panel">
+      <div class="panel-title"><p class="eyebrow">بوابة آمنة</p><h1>دخول المسؤولين</h1><p class="muted">استخدم حساب Firebase الذي منحه مدير النظام صلاحية المسؤول.</p></div>
+      <form id="loginForm" class="stack-form">
+        <label>البريد الإلكتروني<input id="emailInput" type="email" autocomplete="username" required></label>
+        <label>كلمة المرور<input id="passwordInput" type="password" autocomplete="current-password" required></label>
+        <button class="button button-primary" type="submit">تسجيل الدخول</button>
+      </form>
+      <p id="loginMessage" class="form-message" role="status" aria-live="polite"></p>
+    </section>
+
+    <section id="adminPanel" class="hidden">
+      <div class="admin-welcome panel"><div><p class="eyebrow">لوحة إدارة الدروس</p><h1>أهلاً بك</h1><p id="adminIdentity" class="muted"></p></div><span class="secure-badge">● صلاحية مسؤول مؤكدة</span></div>
+      <div class="admin-layout">
+        <section class="panel lesson-editor">
+          <div class="panel-title"><p class="eyebrow">المحتوى التعليمي</p><h2>إعداد الدرس</h2></div>
+          <form id="lessonForm" class="stack-form">
+            <div class="form-row three-columns">
+              <label>المرحلة<select id="stageSelect" required></select></label>
+              <label>المادة<select id="subjectSelect" required></select></label>
+              <label>الترم<select id="termSelect" required></select></label>
+            </div>
+            <label>درس موجود
+              <select id="lessonSelect"><option value="__new__">＋ إنشاء درس جديد</option></select>
+            </label>
+            <div class="form-row two-columns">
+              <label>عنوان الدرس بالعربية<input id="titleAr" maxlength="160" required></label>
+              <label>Lesson title in English <span class="optional">(اختياري)</span><input id="titleEn" maxlength="160" dir="auto"></label>
+            </div>
+            <div class="form-row two-columns">
+              <label>الوصف بالعربية<textarea id="descriptionAr" rows="3" maxlength="2000"></textarea></label>
+              <label>English description <span class="optional">(optional)</span><textarea id="descriptionEn" rows="3" maxlength="2000" dir="auto"></textarea></label>
+            </div>
+            <label>ترتيب الدرس<input id="orderInput" type="number" min="0" step="1" value="0"></label>
+            <button class="button button-secondary" type="submit">حفظ بيانات الدرس كمسودة</button>
+          </form>
+          <p id="lessonMessage" class="form-message" role="status" aria-live="polite"></p>
+        </section>
+
+        <section class="panel upload-panel">
+          <div class="panel-title"><p class="eyebrow">ملفات الدرس</p><h2>رفع وسائط تعليمية</h2><p class="muted">أضف فيديو أو تسجيلاً صوتياً أو صورة أو PDF. أسماء الملفات المتكررة تحفظ بمفاتيح تخزين فريدة.</p></div>
+          <label id="dropZone" class="drop-zone" for="fileInput">
+            <span class="drop-icon" aria-hidden="true">↑</span><strong>اسحب الملفات إلى هنا</strong><span>أو اختر من جهازك</span>
+            <span class="button button-outline">استعراض الملفات</span>
+            <small>MP4 · MP3 · WAV · JPG · PNG · WebP · PDF</small>
+          </label>
+          <input id="fileInput" class="visually-hidden" type="file" multiple accept=".mp4,.mp3,.wav,.jpg,.jpeg,.png,.webp,.pdf,video/mp4,audio/mpeg,audio/wav,image/jpeg,image/png,image/webp,application/pdf">
+          <input id="replaceInput" class="visually-hidden" type="file" accept=".mp4,.mp3,.wav,.jpg,.jpeg,.png,.webp,.pdf">
+          <input id="resumeFilePicker" class="visually-hidden" type="file" accept=".mp4,.mp3,.wav,.jpg,.jpeg,.png,.webp,.pdf">
+          <div id="uploadQueue" class="upload-queue"></div>
+          <div id="overallProgressWrap" class="overall-progress hidden"><div><span>التقدم الإجمالي</span><strong id="overallProgressLabel">0%</strong></div><progress id="overallProgress" max="100" value="0"></progress></div>
+          <div class="button-row"><button id="cancelUploads" class="button button-danger hidden" type="button">إلغاء الرفع</button><button id="publishButton" class="button button-primary" type="button" disabled>نشر الدرس</button></div>
+          <p id="uploadMessage" class="form-message" role="status" aria-live="polite"></p>
+        </section>
+      </div>
+
+      <section class="panel recovery-panel">
+        <div class="section-heading compact-heading"><div><p class="eyebrow">استعادة الرفع</p><h2>جلسات رفع محفوظة</h2></div><button id="refreshSessions" class="button button-quiet" type="button">تحديث</button></div>
+        <p class="muted">إذا انقطع الاتصال أو أغلقت الصفحة، اختر الجلسة ثم أعد تحديد الملف نفسه لرفع الأجزاء المتبقية. حالة الأجزاء محفوظة على R2.</p>
+        <div id="savedSessions" class="saved-sessions"></div>
+        <div id="recoveryItems" class="saved-sessions"></div>
+      </section>
+      <section class="panel history-panel"><div class="section-heading compact-heading"><div><p class="eyebrow">سجل المحتوى</p><h2>ملفات الدرس الحالي</h2></div></div><div id="resourceList" class="resource-list"></div></section>
+    </section>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="./js/admin.js"></script>
+</body>
+</html>

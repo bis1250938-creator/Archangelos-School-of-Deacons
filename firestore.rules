@@ -1,0 +1,51 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function isAdmin() { return signedIn() && request.auth.token.admin == true; }
+    function validLesson(d) {
+      return d.keys().hasAll([
+          'titleAr', 'titleEn', 'descriptionAr', 'descriptionEn', 'stageId', 'subjectId',
+          'termId', 'order', 'thumbnailKey', 'resources', 'isPublished', 'createdBy', 'createdAt', 'updatedAt'
+        ])
+        && d.titleAr is string && d.titleAr.size() <= 160
+        && d.titleEn is string && d.titleEn.size() <= 160
+        && d.descriptionAr is string && d.descriptionAr.size() <= 2000
+        && d.descriptionEn is string && d.descriptionEn.size() <= 2000
+        && d.stageId in ['kg', 'primary-1-2', 'primary-3-4', 'primary-5-6', 'preparatory-secondary', 'deacons-choir']
+        && d.subjectId in ['coptic-hymns', 'orthodox-rites']
+        && d.termId in ['term-1', 'term-2']
+        && d.order is int && d.order >= 0
+        && (d.thumbnailKey == null || d.thumbnailKey is string)
+        && d.resources is list && d.resources.size() <= 100
+        && d.isPublished is bool && d.createdBy is string;
+    }
+    match /lessons/{lessonId} {
+      allow read: if isAdmin() || resource.data.isPublished == true;
+      allow create: if isAdmin() && validLesson(request.resource.data)
+        && request.resource.data.createdBy == request.auth.uid
+        && request.resource.data.resources.size() == 0;
+      allow update: if isAdmin() && validLesson(request.resource.data)
+        && request.resource.data.createdBy == resource.data.createdBy
+        && request.resource.data.resources.size() <= 100;
+      allow delete: if isAdmin();
+    }
+
+    match /stages/{stageId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /subjects/{subjectId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /terms/{termId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /users/{userId} {
+      allow read: if isAdmin() || (signedIn() && request.auth.uid == userId);
+      allow write: if false;
+    }
+  }
+}

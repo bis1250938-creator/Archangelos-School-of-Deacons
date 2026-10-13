@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#801329">
+  <meta name="description" content="مكتبة مدرسة أرشى أنجيلوس للشمامسة: الألحان والطقوس القبطية لجميع المراحل الدراسية.">
+  <title>مدرسة أرشى أنجيلوس للشمامسة</title>
+  <link rel="icon" href="./assets/school-seal.jpeg" type="image/jpeg">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="./" aria-label="الصفحة الرئيسية">
+      <img src="./assets/school-seal.jpeg" alt="شعار مدرسة أرشى أنجيلوس للشمامسة">
+      <span><strong>مدرسة أرشى أنجيلوس للشمامسة</strong><small>Archangelos School of Deacons</small></span>
+    </a>
+    <nav class="header-actions" aria-label="القائمة الرئيسية">
+      <a class="button button-quiet" href="./admin.html">دخول المسؤولين</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">باسم الآب والابن والروح القدس</p>
+        <h1>تعلّم، رتّل، واخدم</h1>
+        <p>مكتبة تعليمية تجمع دروس الألحان القبطية والطقس الأرثوذكسي في مكان واحد، مرتبة حسب المرحلة والمادة والترم.</p>
+        <a class="button button-gold" href="#library">تصفّح الدروس <span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="hero-seal"><img src="./assets/school-seal.jpeg" alt="" aria-hidden="true"></div>
+    </section>
+
+    <section id="library" class="library-section">
+      <div class="section-heading">
+        <div><p class="eyebrow">المكتبة التعليمية</p><h2>اختر دروسك</h2></div>
+        <p class="muted">المحتوى المنشور متاح للمشاهدة والاستماع والقراءة.</p>
+      </div>
+      <form id="filters" class="filter-grid" aria-label="تصفية الدروس">
+        <label>المرحلة
+          <select id="stageFilter" required></select>
+        </label>
+        <label>المادة
+          <select id="subjectFilter" required></select>
+        </label>
+        <label>الترم
+          <select id="termFilter" required></select>
+        </label>
+      </form>
+      <div id="libraryStatus" class="status-line" role="status" aria-live="polite">جارٍ تجهيز المكتبة…</div>
+      <div id="lessonGrid" class="lesson-grid" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>مدرسة أرشى أنجيلوس للشمامسة</span>
+    <span>تعليم قبطي أرثوذكسي · <span id="year"></span></span>
+  </footer>
+
+  <dialog id="lessonDialog" class="lesson-dialog">
+    <div class="dialog-head"><div><p id="dialogMeta" class="eyebrow"></p><h2 id="dialogTitle"></h2></div><button id="closeDialog" class="icon-button" aria-label="إغلاق">×</button></div>
+    <p id="dialogDescription" class="dialog-description"></p>
+    <div id="dialogResources" class="resource-viewer"></div>
+  </dialog>
+  <script type="module" src="./js/public.js"></script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+name = "archangelos-media-worker"
+main = "src/index.js"
+compatibility_date = "2026-10-13"
+compatibility_flags = ["nodejs_compat"]
+workers_dev = true
+
+[vars]
+ALLOWED_ORIGINS = "https://REPLACE_WITH_FIREBASE_HOSTING_DOMAIN"
+MAX_UPLOAD_BYTES = "5492189429760"
+STORAGE_WARNING_BYTES = "0"
+R2_BUCKET_NAME = "archangelos-school-media"
+
+[[r2_buckets]]
+binding = "MEDIA"
+bucket_name = "archangelos-school-media"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "archangelos-media"
+database_id = "REPLACE_WITH_PRODUCTION_D1_DATABASE_ID"
+migrations_dir = "migrations"
+
+[triggers]
+crons = ["17 * * * *"]
+
+[env.dev]
+name = "archangelos-media-worker-dev"
+workers_dev = true
+
+[env.dev.vars]
+ALLOWED_ORIGINS = "http://localhost:5500,http://127.0.0.1:5500"
+MAX_UPLOAD_BYTES = "5492189429760"
+STORAGE_WARNING_BYTES = "0"
+R2_BUCKET_NAME = "archangelos-school-media-dev"
+
+[[env.dev.r2_buckets]]
+binding = "MEDIA"
+bucket_name = "archangelos-school-media-dev"
+
+[[env.dev.d1_databases]]
+binding = "DB"
+database_name = "archangelos-media-dev"
+database_id = "REPLACE_WITH_DEVELOPMENT_D1_DATABASE_ID"
+migrations_dir = "migrations"
+
+[env.dev.triggers]
+crons = ["17 * * * *"]
